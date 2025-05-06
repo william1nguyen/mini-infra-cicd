@@ -1,0 +1,22 @@
+services:
+  gitlab:
+    image: "gitlab/gitlab-ce:latest"
+    container_name: gitlab
+    environment:
+      GITLAB_ROOT_EMAIL: "admin@gmail.com"
+      GITLAB_ROOT_PASSWORD: "yV59FG7HtctA"
+      GITLAB_OMNIBUS_CONFIG: |
+        puma['worker_processes'] = 0 # disable cluster mode to avoid more memory usage
+    volumes:
+      - ./data/gitlab/config:/etc/gitlab
+      - ./data/gitlab/logs:/var/log/gitlab
+      - ./data/gitlab/data:/var/opt/gitlab
+    ports:
+      - "8088:80"
+    networks:
+      - kind
+
+networks:
+  kind:
+    name: kind
+    driver: bridge

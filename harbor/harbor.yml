@@ -1,0 +1,43 @@
+hostname: harbor.local
+
+http:
+  port: 80
+
+harbor_admin_password: Password@Nova
+
+database:
+  password: password
+  max_idle_conns: 50
+  max_open_conns: 100
+  conn_max_lifetime: 5m
+  conn_max_idle_time: 0
+
+data_volume: /data/harbor/data
+
+trivy:
+  ignore_unfixed: false
+  skip_update: true
+  offline_scan: true
+  security_check: vuln
+  insecure: true
+
+jobservice:
+  max_job_workers: 3
+  logger_sweeper_duration: 1
+
+notification:
+  webhook_job_max_retry: 3
+  webhook_job_http_client_timeout: 3
+
+log:
+  level: info
+  local:
+    rotate_count: 10
+    rotate_size: 100M
+    location: /data/harbor/log
+
+_version: 2.8.0
+
+cache:
+  enabled: false
+  expire_hours: 24
