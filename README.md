@@ -12,6 +12,14 @@ Tools:
 
 - Docker
 
+## Start docker container
+
+```
+chmod +x ./start-env-dev.sh
+chmod +x ./stop-env-dev.sh
+./start-env-dev.sh
+```
+
 ## Harbor
 
 domain: harbor.local
