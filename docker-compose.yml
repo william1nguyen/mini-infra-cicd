@@ -1,22 +1,31 @@
 services:
   gitlab:
-    image: "gitlab/gitlab-ce:latest"
+    image: gitlab/gitlab-ce:latest
     container_name: gitlab
     environment:
-      GITLAB_ROOT_EMAIL: "admin@gmail.com"
-      GITLAB_ROOT_PASSWORD: "yV59FG7HtctA"
+      GITLAB_ROOT_EMAIL: admin@gmail.com
+      GITLAB_ROOT_PASSWORD: yV59FG7HtctA
       GITLAB_OMNIBUS_CONFIG: |
-        puma['worker_processes'] = 0 # disable cluster mode to avoid more memory usage
+        external_url 'http://localhost:8088'
+        nginx['listen_port'] = 8088
     volumes:
-      - ./data/gitlab/config:/etc/gitlab
-      - ./data/gitlab/logs:/var/log/gitlab
-      - ./data/gitlab/data:/var/opt/gitlab
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/data:/var/opt/gitlab
     ports:
-      - "8088:80"
+      - "8088:8088"
     networks:
-      - kind
+      - gitlab-network
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    container_name: gitlab-runner
+    depends_on:
+      - gitlab
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitlab-network
 
 networks:
-  kind:
-    name: kind
+  gitlab-network:
     driver: bridge

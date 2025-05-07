@@ -20,6 +20,25 @@ chmod +x ./stop-env-dev.sh
 ./start-env-dev.sh
 ```
 
+## Gitlab runner
+
+- Create new runner(untaged)
+- Register new runner
+
+```
+gitlab-runner register  --url http://localhost:8088  --token REGISTER_TOKEN --docker-network-mode 'host'
+```
+
+- Add volumes to runner
+
+```
+vi /etc/gitlab-runner/config.toml
+```
+
+```
+volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/cache"]
+```
+
 ## Harbor
 
 domain: harbor.local
