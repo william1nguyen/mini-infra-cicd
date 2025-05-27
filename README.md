@@ -1,5 +1,7 @@
 # Mini-Infra-CI/CD
 
+This is mini CI/CD version (docker version) for testing on local.
+
 Stack:
 
 - gitlab
